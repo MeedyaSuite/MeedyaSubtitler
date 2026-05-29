@@ -1,0 +1,49 @@
+# Build outputs
+.build/
+build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# Xcode
+*.swp
+*.swo
+*.xccheckout
+*.moved-aside
+*.DS_Store
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Spotlight
+.Spotlight-V100
+.Trashes
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Dependencies
+Pods/
+Carthage/Build/
+
+# Secrets — never commit
+*.p12
+*.cer
+*.mobileprovision
+.env
+.env.local
+.env.production
+auth_creds.php
+credentials.json
