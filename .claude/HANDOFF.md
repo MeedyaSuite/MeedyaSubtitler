@@ -1,6 +1,6 @@
 # HANDOFF — pick up here
 
-> **Last updated:** 2026-09-28 (by a Claude Code builder session, Opus, making the round 5 fixes — acting on the fifth independent review)
+> **Last updated:** 2026-09-28 (by a Claude Code builder session, Opus)
 > **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
 
 ## Starting a fresh session? Do this
@@ -79,11 +79,14 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 2 fixes | `970f8f4` | Fixed review 2's findings | Third stand-in review, `bf48908..970f8f4` | Not clean — across both repositories, 0 must-fix, 3 should-fix, 12 minor findings (this repository's own should-fix share: 2); fixed in round 3 |
 | Round 3 fixes | `1263d79` | Fixed review 3's findings | Fourth stand-in review, `970f8f4..1263d79` | Not clean — across both repositories, 0 must-fix, 1 should-fix, 7 minor, 2 nits, almost all wrong statements about review history rather than wrong policy substance; fixed in round 4 |
 | Round 4 fixes | `5b09c30` | Put review status into this one table; fixed the wrong statements the fourth review found | Fifth stand-in review, `1263d79..5b09c30` | Not clean — across both repositories, 1 should-fix, 9 minor, 3 nits and 1 follow-up; it confirmed this table's rows; fixed in round 5 |
-| Round 5 fixes | the commit after `5b09c30` | Cut the narrative review sections down to this table; fixed the fifth review's findings | Not yet reviewed | — |
+| Round 5 fixes | `48de926` | cut the review narrative | sixth stand-in review (`5b09c30..48de926`) | not clean: 0 must, 0 should, 2 minor, 1 nit (across both repositories) |
+| Round 6 fixes | `a2a860b` | completed the wrong-message lists | seventh stand-in review (`48de926..a2a860b`) | not clean: 0 must, 0 should, 2 minor, 3 nits (across both repositories) — wording and table upkeep only |
+
+Commits after `a2a860b` are not yet reviewed. This table records finished reviews only.
 
 - Every review so far has been a fresh Opus agent standing in for Codex. **None of this work has had a Codex review.**
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
-- Two commit messages carry a claim later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
+- Two commit messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
 - Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
 - **CI:** of the commits this work has pushed (from `fbae4a1` on), only the last commit of each push has its own check run — `58d8f1b`, `fc211a1`, `bf48908`, `970f8f4`, `1263d79` and `5b09c30`, all passed. The four commits folded into the first push (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) were checked only as part of it.
 
