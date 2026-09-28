@@ -2,14 +2,25 @@
 #
 # MWBM-MEDIA-LANG policy copies must stay byte-for-byte identical to the
 # master files in MWBMPartners/MeedyaSuite-core (see
-# docs/standards/media-language-bcp47-policy.md, section 8.3). If git ever
-# converted their line endings on checkout, the copy checker
-# (scripts/media-lang/check_copies.py) would report every one of them as
-# "changed" even though nobody edited a single character. Marking them
-# "-text" tells git never to touch their line endings, on any platform.
-docs/standards/media-language-bcp47-policy.md -text
-Tests/Fixtures/bcp47-language-policy-v1.json -text
-Tests/Fixtures/bcp47-language-policy-v1.schema.json -text
-docs/standards/data/bcp47-language-data-v1.json -text
-docs/standards/data/bcp47-language-data-v1.schema.json -text
-scripts/media-lang/check_copies.py -text
+# docs/standards/media-language-bcp47-policy.md, section 8.3). Git can change
+# a file's bytes several ways as it moves the file between its stored form
+# and the copy on disk: converting line endings, running a filter, converting
+# text encoding, or expanding an "$Id$" marker. Any one of those would make
+# the copy checker (scripts/media-lang/check_copies.py) report the file as
+# "changed" even though nobody edited a single character, so all four are
+# turned off below for each copied file:
+#   -text                   never convert line endings
+#   -filter                 never run a filter on this file
+#   -working-tree-encoding  never convert its text encoding
+#   -ident                  never expand an "$Id$" marker in it
+# This only controls what happens inside this repository. A higher-priority
+# setting on someone's own machine (for example their own
+# ".git/info/attributes" file) can still override it — if that happens, the
+# copy checker would correctly report the copy as changed, and the fix is to
+# remove that person's local override, not to change this file.
+docs/standards/media-language-bcp47-policy.md -text -filter -working-tree-encoding -ident
+Tests/Fixtures/bcp47-language-policy-v1.json -text -filter -working-tree-encoding -ident
+Tests/Fixtures/bcp47-language-policy-v1.schema.json -text -filter -working-tree-encoding -ident
+docs/standards/data/bcp47-language-data-v1.json -text -filter -working-tree-encoding -ident
+docs/standards/data/bcp47-language-data-v1.schema.json -text -filter -working-tree-encoding -ident
+scripts/media-lang/check_copies.py -text -filter -working-tree-encoding -ident

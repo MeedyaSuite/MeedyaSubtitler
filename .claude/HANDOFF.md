@@ -83,10 +83,11 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 6 fixes | `a2a860b` | completed the wrong-message lists | seventh stand-in review (`48de926..a2a860b`) | not clean: 0 must, 0 should, 2 minor, 3 nits (across both repositories) — wording and table upkeep only |
 | Round 7 fixes | `a7b77c0`, `10b7b8b` | kept this table current; "Last updated" gives the date only | eighth stand-in review (`a2a860b..10b7b8b`) | not clean: 0 must, 1 should, 2 minor (across both repositories) |
 | Round 8 fixes | `e284012` | the CI line states the rule instead of listing runs | ninth stand-in review (`10b7b8b..e284012`) | not clean: 0 must, 0 should, 2 minor (across both repositories) |
+| Codex catch-up | — (review only; produced no commits) | The first review by the actual, usual reviewer (Codex) — every review before this one was a fresh Opus agent standing in for it. It covered the whole branch as one piece rather than just the diff since the last review | Codex catch-up review, `53bbc0f..44cf095` | not clean — one finding, the `.gitattributes` protection gap (shared with MeedyaPlayer, which also had 7 findings of its own); fixed in this round |
 
-Commits after `e284012` are not yet reviewed. This table records finished reviews only.
+Commits after `44cf095` are not yet reviewed. This table records finished reviews only.
 
-- Every review so far has been a fresh Opus agent standing in for Codex. **None of this work has had a Codex review.**
+- Every review up to and including the ninth stand-in review was a fresh Opus agent standing in for Codex. The Codex catch-up review is the first review by the actual, usual reviewer; commits after `44cf095` still await one.
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
 - Two commit messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
 - Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
