@@ -2,9 +2,7 @@
 
 ## Log
 - 2026-09-23: Project memory set up (standing rules, handoff, context). No code yet. A Codex review of these documentation files is owed.
-- 2026-09-28: New branch `feature/bcp47-language-policy` adopted the shared MWBM-MEDIA-LANG 1.0.0 language policy (copies under `docs/standards/`, checker + first CI workflow, agent pointers in AGENTS.md/.claude/CLAUDE.md/.OpenAI/CONTEXT.md, comments on issues #5/#6/#8/#14). Committed and **pushed; CI passed on the last commit of each push (earlier commits in a push were checked only as part of it)**.
-- 2026-09-28 (later): Core copy-update sweep: re-pinned from `f2e106a` to `aaaa585` (268 → 290 conformance cases, eight clarified rules, none changing an existing answer). See `.claude/HANDOFF.md`, "Copy-update sweep".
-- Four rounds of fallback review have run since (each a fresh Opus agent standing in for Codex, per "Independent review" / "Second independent review" / "Third independent review" and this round) — see `.claude/HANDOFF.md`, "Review history," for the one table of what each round covered and found; not restated here so it can't drift out of sync with that table again.
+- 2026-09-28: New branch `feature/bcp47-language-policy` adopted the shared MWBM-MEDIA-LANG 1.0.0 language policy (copies under `docs/standards/`, checker + first CI workflow, agent pointers in AGENTS.md/.claude/CLAUDE.md/.OpenAI/CONTEXT.md, comments on issues #5/#6/#8/#14); pushed. In order, the same day: a first review and its fixes, then a copy-update sweep to core `aaaa585` (umbrella issue #16), then more review-and-fix rounds. CI and review status: `.claude/HANDOFF.md`, "Review history".
 
 ## Device-wide rule (copy into `~/.codex/AGENTS.md` and `~/.claude/CLAUDE.md` on each machine)
 

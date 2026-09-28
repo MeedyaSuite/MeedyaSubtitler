@@ -1,7 +1,7 @@
 # HANDOFF — pick up here
 
-> **Last updated:** 2026-09-28 (by a Claude Code economy-tier builder session, Sonnet, acting on a fourth independent review)
-> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; CI passed on the last commit of each push (earlier commits in a push were checked only as part of it); will go to `alpha` in a single PR). Adopted the shared policy, then fixed across three more rounds ("Independent review", "Second independent review", "Third independent review" below) as successive fresh Opus agents stood in for Codex; core shipped more reviewed clarifications in between, so the copies here were moved forward to core's new commit `aaaa585` — see "Copy-update sweep" below. A fourth independent review — one agent, covering MeedyaPlayer and MeedyaSubtitler together — found the review-status narrative in this file had drifted from what git and GitHub actually show. **See "Review history" below for the one checkable table**; the sections above it describe what each round actually did, in the past tense.
+> **Last updated:** 2026-09-28 (by a Claude Code builder session, Opus, making the round 5 fixes — acting on the fifth independent review)
+> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
 
 ## Starting a fresh session? Do this
 1. Check out branch `feature/bcp47-language-policy` (or `claude/keen-pascal-shoj9x` if picking up the earlier, still-unmerged bootstrap work instead) and pull the latest.
@@ -9,182 +9,86 @@
 3. Deal with the **open questions** below (ask the owner if they are still unanswered).
 4. Continue with the **next steps** queue.
 
-## What the 2026-09-28 adoption session did
+## The language-policy work
 
-Adopted the shared **MWBM-MEDIA-LANG 1.0.0** language policy from
-`MWBMPartners/MeedyaSuite-core`. Committed and **pushed** to
-`origin/feature/bcp47-language-policy` at `58d8f1b`; CI (the new
-policy-copies workflow) green. Answering open question 1 below about
-`alpha` is still needed before a PR can be opened:
+The branch adopts the shared **MWBM-MEDIA-LANG 1.0.0** language policy from
+`MWBMPartners/MeedyaSuite-core`. There is still no app code, so it is
+documents and one check:
 
-1. Created `docs/` (didn't exist yet) with a short README, and placed
-   byte-identical copies of the policy document, its conformance test
-   cases and schema, the reference language data and its schema, and the
-   checker script itself under `docs/standards/` and `Tests/Fixtures/`,
-   with `docs/standards/MWBM-MEDIA-LANG.lock` recording which commit they
-   came from. The copies started already pinned to core `968d820` — which
-   had already added the real rule that builders must refuse a sidecar
-   number above nine digits — and moved once during this session, to
-   `f2e106a9d025c95d679eed825ab0f78a6b23ebe7`, as the master document was
-   still being reviewed elsewhere; this is a record of the adoption
-   session's final pin, not the current one; it was moved forward again
-   since, to `aaaa585`, see "Copy-update sweep" below.
-   **Correction (see "Independent review" below):** an earlier version of
-   this line said the move was "only wording and a test-harness
-   clarification" — that move actually added six new refusal test cases
-   (core's own commit message: "test cases can require a refusal; six
-   refusal cases"). No rule ID changed, but that's narrower than "only
-   wording." **A second correction (this round):** an earlier version of
-   *this* line credited the sidecar-refusal rule to "the move to `968d820`"
-   — wrong here, since this repository's copies were already pinned to
-   `968d820` from the very first commit; there was no move into it. That
-   framing was copied from MeedyaPlayer, where the pin genuinely did move
-   through `968d820` on the way to `f2e106a`.
-2. Added `.github/workflows/policy-copies.yml` — the repo's **first** CI
-   workflow — running the checker on every PR and push. Passed
-   `actionlint`; hardened further in the review below (permissions, a
-   token for the checker, the checkout action's pin).
-3. Added `.gitattributes` so the copies are never line-ending-converted.
-4. Pointed `AGENTS.md`, `.claude/CLAUDE.md` and `.OpenAI/CONTEXT.md` at the
-   policy document (the policy itself requires this — section 8.3 — and
-   forbids pasting the rules in instead). There is no root `CLAUDE.md` or
-   `GEMINI.md` in this repo, so those two weren't touched.
-5. Read and commented on four open issues touching this policy, without
-   rewriting them: [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6)
-   (a genuine policy conflict — the canonical `SubtitleDocument` model has
-   a single `language` field and no structured roles — corrected below,
-   see "Independent review"), [#14](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14)
-   (a recommendation, not a requirement, per the second independent review
-   below — cross-app handoff identifies a track by position only), and
-   [#8](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/8) (also a
-   recommendation, not a requirement, per the same review — defaults the
-   waveform's audio track to "track 0" rather than the main-programme
-   track) — and a fourth, [#5](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/5),
-   which is neither: just a note that the shared Swift implementation of
-   this policy lives in MeedyaConverter for now, and none of the four
-   planned SPM modules is an obvious home for it.
+- `docs/` (new) with a short README, and byte-identical copies of the
+  policy, its conformance cases and schema, the reference language data and
+  its schema, and the checker script, under `docs/standards/`,
+  `Tests/Fixtures/` and `scripts/media-lang/`.
+  `docs/standards/MWBM-MEDIA-LANG.lock` records which core commit they came
+  from, and `.gitattributes` stops git changing their line endings. Never
+  edit a copy — change the master in core, then run the checker's
+  `--update` here.
+- `.github/workflows/policy-copies.yml`, the repo's first CI workflow. It
+  runs the checker on every pull request and push, with read-only
+  permissions, the job's own token handed to the checker, and
+  `actions/checkout` pinned to v6.1.0 by full commit.
+- A pointer to the policy, not a copy of its rules, in `AGENTS.md`,
+  `.claude/CLAUDE.md` and `.OpenAI/CONTEXT.md` (policy section 8.3). There
+  is no root `CLAUDE.md` or `GEMINI.md` in this repo.
+- Comments on four issues (links under "GitHub comments" below): #6 is a
+  real conflict with the policy (the `SubtitleDocument` model it proposes
+  has no structured field for a subtitle track's roles, such as forced, SDH
+  and commentary; its single `language` field is fine as long as it always
+  holds a canonical tag); #14 and #8 carry
+  recommendations, not requirements, because automatic track selection is
+  a player's job (section 8.1); #5 notes that the shared Swift
+  implementation lives in MeedyaConverter for now and that none of the four
+  planned SPM modules is an obvious home for it.
 
-## Independent review, 2026-09-28 (fresh Opus agent, standing in for Codex)
+**What the policy asks of this app** (`docs/README.md` has the same
+summary): its profile is canonical and text — it writes subtitle
+languages, roles and sidecar file names — plus a small presentation part
+for its own language pickers, which follow Part B's menu rules. Matching
+(MATCH-010 to MATCH-040) is needed by the text profile too (section 8.1).
+Automatic track selection (AUTO-010 to AUTO-040) is a player's job, not
+this app's. Writing sidecar names IS this app's job (TEXT-030): a future
+sidecar writer reads the language it is given with LANG-002's reader
+(`fre` → `Film.fr.srt`, unrecognised → `Film.und.srt`).
 
-Codex — the usual reviewer per rule R5 — was out of allowance, so a fresh
-Opus agent with no memory of building the adoption reviewed it instead, per
-rule R7 (AI fallback). **This is a fallback review, not the usual one** —
-see "Review history" below for what covered these fixes and the result.
+**Pin history:** the first pin was core `968d820`, which already had the
+rule that builders refuse a sidecar number above nine digits. The adoption
+session moved it once, to `f2e106a`; its note that no rule ID changed and
+the move was only wording and a test-harness clarification was essentially
+accurate (the policy text gained one sentence on how a test harness treats
+refusal cases, and the case file gained six refusal cases, 262 → 268). The
+copy-update sweep then moved it to `aaaa585` (268 → 290 cases; among other
+changes it settled eight points the text had left open, listed in the
+policy's own 1.0.0 changelog). No rule ID changed at any step.
 
-What it found and fixed:
-
-- The pin-move note above overstated "only wording" (see item 1 above).
-- The comment on #6 over-read TEXT-050 (it forbids collapsing distinct
-  translations, not "a document must hold several languages") and
-  mis-placed roles on individual cues rather than the whole track — a
-  follow-up comment corrects both, and withdraws the word "untyped" used
-  in an earlier internal note but never in the issue itself.
-- The comments on #14 and #8 cited AUTO-010/AUTO-020 as though they bound
-  MeedyaSubtitler directly; those rules govern *automatic selection*,
-  which section 8.1 assigns to the player part of the presentation
-  profile — not to Part B as a whole, which also covers ordinary menu and
-  matching rules this app's own small presentation part can share in.
-  Follow-up comments reframe the advice as "in the spirit of" those rules
-  rather than a requirement.
-- `docs/README.md` said MeedyaSubtitler "needs almost all of" the policy;
-  section 2 actually gives it a much smaller slice (canonical, text, a
-  small presentation part) and says explicitly that a project should not
-  build the rest. Corrected, and the note now also points at
-  `Tests/Fixtures/` for the case-file copies.
-- The pointer sentence in `AGENTS.md`/`.claude/CLAUDE.md`/`.OpenAI/CONTEXT.md`
-  said "reuse MeedyaConverter's implementation until a shared package
-  exists" without saying where that implementation actually lives or what
-  triggers the move — now matches policy section 9 exactly (MeedyaConverter,
-  on a work-in-progress branch there, not yet on its own `alpha`; moves to
-  a shared package once MeedyaPlayer or MeedyaSubtitler has code).
-- `.claude/STANDING-RULES.md` R6 still named `claude/keen-pascal-shoj9x` as
-  the one working branch while this handoff had already moved to
-  `feature/bcp47-language-policy`; R6 only allows one. Fixed to say plainly
-  that `feature/bcp47-language-policy` (which contains everything
-  `claude/keen-pascal-shoj9x` has) is the one working branch until it
-  merges.
-- The CI workflow was missing `permissions: contents: read`, had no
-  `GITHUB_TOKEN` for the checker (which hits GitHub's unauthenticated rate
-  limit without one — reproduced as an HTTP 403), and pinned
-  `actions/checkout` to an old v4 SHA on the deprecated Node 20 runtime.
-  Fixed: explicit read-only permissions, the job's own token handed to the
-  checker, and the checkout action re-pinned to v6.1.0.
-- Several "not pushed" statements throughout this handoff, `.claude/CONTEXT.md`,
-  `.OpenAI/CONTEXT.md` and `.OpenAI/MEMORY.md` were left stale once the
-  branch was actually pushed. Corrected throughout.
-- **Historical note, not a rewrite:** the four commits that adopted this
-  policy (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) did not themselves say
-  they were unreviewed at the time they were made — they simply were not
-  independently reviewed yet, which is what this section now records, not
-  something being retroactively added to those commit messages.
-
-## Copy-update sweep, 2026-09-28 (later the same day)
-
-MeedyaSuite-core shipped several more reviewed clarifications on top of the
-commit the copies were pinned to (`f2e106a9d025c95d679eed825ab0f78a6b23ebe7`).
-This session moved the pin forward to core's new commit
-`aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`.
-
-1. Ran `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py --update aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`, then the checker again with no arguments: `MWBM-MEDIA-LANG 1.0.0: 6 copies match the master at MWBMPartners/MeedyaSuite-core@aaaa585aa145.` (exit 0). `.gitattributes` still lists all six copies — the file set didn't change, only their contents. The conformance case file went from 268 cases to 290; nothing in this repository's own prose named the old count, so there was nothing else to update for that.
-2. Read what changed (eight clarified rules, all in the policy's own 1.0.0 changelog, none changing an existing case's answer): a malformed preference or menu value matches nothing, not even an identical malformed value, and a user whose preferences are all malformed counts as having none; "canonical order" in automatic selection means a track's position in full stored order among *every* track of its type; when every audio track is commentary or other, commentary ranks before other (AUTO-020); a forced-only subtitle search can match a forced track against a private-use or grandfathered audio tag; a sidecar builder reads what it's given with LANG-002's reader before writing the file name; a label lists each role once and leaves out an empty part along with its separator; and a malformed value keeps its text after LANG-001 step 1's trim.
-3. **Checked, nothing in the documents needed changing — but this line's own reasoning was wrong, see the second review below:** none of `docs/README.md`, `AGENTS.md`, `.claude/CLAUDE.md`, `.claude/CONTEXT.md` or `.OpenAI/CONTEXT.md` describes any of the eight points above in enough detail to have been wrong — they only say, in general terms, that MeedyaSubtitler writes subtitle languages, roles and sidecar names, without describing the sidecar-naming algorithm itself. **Correction:** writing sidecar names IS this app's job (section 2's table; TEXT-030) — only automatic selection belongs to a player, outside this app's profile (see the clarifications posted on #14 and #8 in the previous round). The original wording here lumped sidecar naming in with automatic selection as though neither applied, which was wrong for sidecar naming.
-4. `python3 scripts/media-lang/check_copies.py` and `actionlint` both still pass (checked again after this update).
-5. **Not settled by this update:** the pin still points at a commit that exists only on core's `feature/bcp47-language-policy` branch, not on core's `main` (confirmed again — see the Next steps item below, which now names the new commit rather than the one this replaces).
-6. Opened [#16 — Language policy (MWBM-MEDIA-LANG) adoption and conformance tracking](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/16) as the umbrella issue this and future re-pins are recorded against (none existed before this sweep). Commits from this point on `Refs #16`.
-
-## Second independent review, 2026-09-28 (a second fresh Opus agent, standing in for Codex again)
-
-Codex was still unavailable, so a second fresh Opus agent with no memory of building the earlier sections reviewed the copy-update sweep. Verdict: not clean — 4 should-fix and 2 minor findings. **This is another fallback review, not the usual one** — see "Review history" below for what covered these fixes and the result. The builder session that made these fixes is Sonnet, not Opus; the two earlier commits' `Co-Authored-By: Claude Opus 5.5` lines are wrong in the same way and are not being rewritten — see the note at the end of this section.
-
-What it found and what this session fixed:
-
-- Item 3 of the copy-update sweep, above, said the sidecar-naming algorithm "belongs to a player, outside this app's profile" — wrong. Writing sidecar names is this app's own job (section 2; TEXT-030); only automatic selection belongs to a player. Corrected above, and a comment recording this — plus the requirement that a future sidecar writer read its input with LANG-002's reader (`fre` → `Film.fr.srt`, unrecognised → `Film.und.srt`) — was posted on [#16](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/16#issuecomment-5868498537). **This same error is in the commit message of `bf48908`**, which cannot now be changed without rewriting pushed history — recorded here plainly instead.
-- `docs/README.md` said the full Part B menu, matching and automatic-selection logic "belongs to a player, not an editor," and added a "that's not 'almost all of it'" aside. Corrected at the time to say the full Part B menu ordering and automatic track selection are a player's job, but matching (MATCH-010 to MATCH-040) is needed by the text profile too (section 8.1) — MeedyaSubtitler's own profile; the aside was dropped as redundant once the actual scope was stated. **Correction (see the third review below):** that fix was itself wrong in the same direction as the original — MeedyaSubtitler's own small presentation part still follows Part B's menu rules for its own language pickers; only automatic track selection (AUTO-010 to AUTO-040) is a player's job. Fixed there, not here.
-- The note on the comments for #14 and #8 said those rules are governed by "Part B — a player's job" — too broad; Part B also covers ordinary menu/matching rules this app's own small presentation part shares in. Narrowed to what's actually true: section 8.1 assigns *automatic selection* specifically to the player part of the presentation profile. Short follow-up comments posted on [#14](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5868493447) (also dropping "an identifying decision," a paraphrase, in favour of AUTO-010's own wording) and [#8](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/8#issuecomment-5868493744).
-- Item 5 of the adoption session, above, listed #6, #14 and #8 together as "three describing behaviour the policy would not allow" — only #6 is an actual policy conflict; #14 and #8 are recommendations, as the previous round's own follow-up comments already said. Corrected above.
-- The second comment on [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862570556) cited LANG-001 as the source of "`und` when the language isn't known" — that's LANG-002/LANG-003's rule, not LANG-001's, and it also implied a malformed typed tag is silently turned into `und`, when LANG-026 actually says it keeps its own text and is reported. A third comment corrected both, posted on [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5868496112).
-- Several places still named a single commit as though it were the current pushed state (which goes stale the moment another commit is pushed) — the header, this section's own history, and `.claude/CONTEXT.md`/`.OpenAI/CONTEXT.md` were reworded to say the branch is pushed with CI green on every commit, without pinning that claim to one commit hash. **Correction (see "Third independent review" below):** "CI green on every commit" was itself found false the next round — check runs exist only for the last commit of each push. That is what this round actually wrote at the time; the correction belongs to the round that found it wrong, not to this historical account of what round 2 did.
-
-**On attribution:** the maintainer's own instruction for this round is that commits should credit the model actually doing the work — Claude Sonnet 5, this session — not the model that reviewed. The two earlier commits on this branch (`fc211a1`, `bf48908`) are `Co-Authored-By: Claude Opus 5.5`, which was the reviewer's name, not the builder's, and that mislabel is not being corrected by rewriting those commits (this project never rewrites pushed history without an explicit instruction to do so). This paragraph is that correction, in writing, for anyone reading the commit log afterwards.
-
-## Third independent review, 2026-09-28 (a third fresh Opus agent, standing in for Codex again)
-
-Codex remained unavailable, so a third fresh Opus agent with no memory of building the earlier sections reviewed the second review's fixes. This review covered MeedyaPlayer's equivalent round too; across both repositories the verdict was not clean — 0 must-fix, 3 should-fix, 12 minor findings, with this repository's own share of the should-fix findings being 2 (see "Review history" below for the full tally). The findings here were all the same shape: an earlier round fixed one copy of a piece of wrong wording and missed a second copy of the same wording elsewhere. **This is a third fallback review, not the usual one** — see "Review history" for what covered these fixes and the result. This session is Claude Sonnet 5, the builder, not the reviewing model.
-
-What it found and what this session fixed:
-
-- **"CI green on every commit" was false throughout this repository.** Checking the actual GitHub check runs: they exist only for the last commit of each push (`58d8f1b`, `fc211a1`, `bf48908`, `970f8f4`, all passed) — the four commits pushed together with one of those four (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) have no check runs of their own at all, because GitHub only runs a workflow once per push, against the commit at the top of it. Replaced everywhere this claim appeared — this handoff's header, its "Second independent review" section, and its task table; `.claude/CONTEXT.md`; `.OpenAI/CONTEXT.md`; `.OpenAI/MEMORY.md` — with "pushed; CI passed on the last commit of each push (earlier commits in a push were checked only as part of it)." **One place this cannot be fixed:** the commit message of `970f8f4` itself says "reworded to say the branch is pushed with CI green on every commit" — that text is now part of pushed history and is left as it is, per this project's rule against rewriting pushed commits without an explicit instruction; this paragraph is the correction, in writing, for anyone reading the commit log afterwards.
-- `docs/README.md` and this handoff's own "Second independent review" section (item on `docs/README.md`) both still said "the full Part B menu ordering and automatic track selection are a player's job" — wrong in the same direction the original wording was wrong, since MeedyaSubtitler's own small presentation part (stated a few lines above the `docs/README.md` sentence itself) does follow Part B's menu rules for its own language pickers; only *automatic selection* (AUTO-010 to AUTO-040) is a player's job. Both corrected to: automatic track selection is a player's job (section 8.1); this app's own language pickers still follow Part B's menu rules, and matching (MATCH-010 to MATCH-040) is needed by the text profile too (section 8.1).
-- The quote of AUTO-010 on [#14](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5868493447) read "MUST give the same answer however the tracks happen to be listed" — a paraphrase, not the policy's own words, which are "MUST give the same answer whatever order the tracks are listed in." A follow-up comment quotes the policy exactly, posted on [#14](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5869135447).
-- The note on [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5868496112) describing LANG-002 as covering "reading a legacy code that turns out unrecognised" understated its scope — LANG-002's own words are "every language value read from a file, a tag or another system MUST go through this reader," not only legacy three-letter codes. A follow-up comment quotes the policy exactly, posted on [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5869142026).
-- The task table's entries for tasks 13 and 14 were stale: task 13 named only task 12 as the fallback review still needing a real Codex pass, when tasks 15 and 16 are fallbacks too; task 14 said the copy-update sweep was "also not yet reviewed," when task 15 already reviewed it (and found problems). Both corrected, and task 16 (this review) added.
-- The memory file `.OpenAI/MEMORY.md` said the second review's fixes included "three more short GitHub comments (on #16, #14, #8, #6)" — that names four issues, not three. Corrected to "four more," and a line for this round's own review and fixes added.
-- The record of the very first copy pin, in this handoff's adoption-session item 1, called `f2e106a` "a record of that first pin" — but the pin had already moved once before landing there, so it was the adoption session's *final* pin, not literally its first. Reworded to "a record of the adoption session's final pin."
-
-Verified: `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py` passes online; `actionlint` passes; `git diff --check` is clean; no occurrence of the maintainer's real name or the scratch-folder path was added; the commit author/committer are `Salem874 <Salem874@MWBMpartners.ltd>`, never set by this session.
+**GitHub comments** (later ones correct earlier ones; none was edited or
+deleted):
+- [#6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155), corrected in [one](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862570556), [two](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5868496112), [three](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5869142026)
+- [#14](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5862052451), corrected in [one](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5862571712), [two](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5868493447), [three](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/14#issuecomment-5869135447)
+- [#8](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/8#issuecomment-5862052749), corrected in [one](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/8#issuecomment-5862572996), [two](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/8#issuecomment-5868493744)
+- [#5](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/5#issuecomment-5862053064)
+- [#16 — Language policy (MWBM-MEDIA-LANG) adoption and conformance tracking](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/16) is the umbrella issue for this work and future re-pins (commits from the copy-update sweep on say `Refs #16`); its [comment](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/16#issuecomment-5868498537) records that writing sidecar names is this app's job.
 
 ## Review history
 
-A fourth independent review (a fresh Opus agent standing in for Codex, covering MeedyaSubtitler and MeedyaPlayer in the same pass) found that the review-status narrative scattered across the sections above and their companion files had drifted from what git and GitHub actually show. This table is the fix: the one place review status lives now. The sections above keep only what each round actually did, in the past tense.
+The one place review status is kept. Round N's fixes act on review N's findings. The third, fourth and fifth reviews each gave one count for MeedyaSubtitler and MeedyaPlayer together.
 
 | Round | Commits | What the round did | Covered by which review (range) | Result |
 | --- | --- | --- | --- | --- |
-| Adoption build | `fbae4a1` … `58d8f1b` | Adopted the policy: copies, first CI workflow, agent pointers, comments on #6/#14/#8/#5 | First stand-in review (→ "Independent review") | Not clean; fixed in "Independent review" (no numeric tally was recorded for this round) |
-| Round 1 fixes + copy-update sweep | `fc211a1`, `bf48908` | Fixed review 1's findings; re-pinned the copies to core `aaaa585` | Second stand-in review, `58d8f1b..bf48908` (→ "Second independent review") | Not clean — 4 should-fix, 2 minor findings; fixed in "Second independent review" |
-| Round 2 fixes | `970f8f4` | Fixed review 2's findings | Third stand-in review, `bf48908..970f8f4` (→ "Third independent review") | Not clean — across both repositories, 0 must-fix, 3 should-fix, 12 minor findings (this repository's own should-fix share: 2); fixed in "Third independent review" |
-| Round 3 fixes | `1263d79` | Fixed review 3's findings | Fourth stand-in review, `970f8f4..1263d79` (→ this section) | Not clean — across both repositories, 0 must-fix, 1 should-fix, 7 minor, 2 nits, almost all wrong statements about review history rather than wrong policy substance; fixed this round |
-| Round 4 fixes (this round) | this round's commit | Replaced the scattered review-history narrative with this table; fixed the wrong statements the fourth review found | Not yet reviewed | — |
+| Adoption build | `fbae4a1` … `58d8f1b` | Adopted the policy: copies, first CI workflow, agent pointers, comments on #6/#14/#8/#5 | First stand-in review | Not clean (no numeric tally was recorded); fixed in round 1 |
+| Round 1 fixes + copy-update sweep | `fc211a1`, `bf48908` | Fixed review 1's findings; re-pinned the copies to core `aaaa585` | Second stand-in review, `58d8f1b..bf48908` | Not clean — 4 should-fix, 2 minor findings; fixed in round 2 |
+| Round 2 fixes | `970f8f4` | Fixed review 2's findings | Third stand-in review, `bf48908..970f8f4` | Not clean — across both repositories, 0 must-fix, 3 should-fix, 12 minor findings (this repository's own should-fix share: 2); fixed in round 3 |
+| Round 3 fixes | `1263d79` | Fixed review 3's findings | Fourth stand-in review, `970f8f4..1263d79` | Not clean — across both repositories, 0 must-fix, 1 should-fix, 7 minor, 2 nits, almost all wrong statements about review history rather than wrong policy substance; fixed in round 4 |
+| Round 4 fixes | `5b09c30` | Put review status into this one table; fixed the wrong statements the fourth review found | Fifth stand-in review, `1263d79..5b09c30` | Not clean — across both repositories, 1 should-fix, 9 minor, 3 nits and 1 follow-up; it confirmed this table's rows; fixed in round 5 |
+| Round 5 fixes | the commit after `5b09c30` | Cut the narrative review sections down to this table; fixed the fifth review's findings | Not yet reviewed | — |
 
-Three more facts, recorded once here rather than scattered through the sections above:
-
-- Every review so far has been a fresh Opus agent standing in for Codex, so **none of this work has had a Codex review** yet, on either repository.
-- Commits that wrongly credit Opus (left as pushed, not rewritten — see the attribution note above): `fc211a1` and `bf48908`. MeedyaPlayer has the same problem on its own `ef4b886`, `2b29659`, `79e069e`.
-- Commit messages that carry a claim later found wrong, and cannot be changed without rewriting pushed history: this repository's `970f8f4` states "CI green on every commit," which the next round found false (see the CI line below). MeedyaPlayer's `d633047` states its review's tally as though it were that repository's count alone — the row above gives the corrected, cross-repository figure.
-
-**CI:** MeedyaSubtitler — only the last commit of each push has its own check run (`58d8f1b`, `fc211a1`, `bf48908`, `970f8f4`, `1263d79`; all passed); the four commits folded into the first push (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) were checked only as part of it. MeedyaPlayer differs — every commit on its branch has its own passing check run.
+- Every review so far has been a fresh Opus agent standing in for Codex. **None of this work has had a Codex review.**
+- `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
+- Two commit messages carry a claim later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has "CI green on every commit" (see the CI line below).
+- Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
+- **CI:** of the commits this work has pushed (from `fbae4a1` on), only the last commit of each push has its own check run — `58d8f1b`, `fc211a1`, `bf48908`, `970f8f4`, `1263d79` and `5b09c30`, all passed. The four commits folded into the first push (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) were checked only as part of it.
 
 ## Where we are (state of play)
-- The project is at **planning stage**. There is no app code yet: just README, LICENSE, .gitignore, `docs/` (new this session — see above), and the planning issues #1 to #15.
+- The project is at **planning stage**. There is no app code yet: just README, LICENSE, .gitignore, `docs/` (added by the language-policy work — see above), and the planning issues #1 to #15.
 - **No pull requests** exist. **No `alpha` branch** exists yet.
 - The previous session set up the project's "working memory":
   - `.claude/STANDING-RULES.md`: standing rules R1 to R10 and standing tasks T1 and T2, revised to the owner's latest list
@@ -193,7 +97,7 @@ Three more facts, recorded once here rather than scattered through the sections 
   - `.OpenAI/CONTEXT.md` and `.OpenAI/MEMORY.md`, plus a root `AGENTS.md`: the same information for Codex and other AI tools
 - The AI fallback rule (R7) was also written to the **device-wide** files (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`). ⚠️ In a cloud session those files are **wiped when the session ends**, so the lasting copy lives in this repo. The owner should copy the rule onto their own machine(s) (text is in `.OpenAI/MEMORY.md`, section "Device-wide rule").
 - Documentation pass (T2): the README is accurate for the planning stage. There is **no API** (so no Swagger), **no web part** (so no Swagger UI) and **no app** (so no in-app help) yet. Nothing more to do until code exists.
-- Codex review (R5): this session only changed documentation, and the Codex CLI isn't installed in the cloud session. **A Codex review of these files is still owed.** Run it from a machine that has Codex (see the next steps).
+- Codex review (R5): the 2026-09-23 session only changed documentation, and the Codex CLI isn't installed in the cloud session. **A Codex review of these files is still owed.** Run it from a machine that has Codex (see the next steps).
 
 ## Task queue
 | # | Task | Status |
@@ -208,23 +112,20 @@ Three more facts, recorded once here rather than scattered through the sections 
 | 8 | Codex review of this session's changes | ⏳ Owed: Codex isn't available in the cloud session |
 | 9 | The Codex review the owner mentioned for **00:08** | ❓ Not visible from this repo (see open question 2) |
 | 10 | Start phase 0 work (#5 foundation, then #14) | ⏸ Waiting for the owner's go-ahead |
-| 11 | Adopt MWBM-MEDIA-LANG 1.0.0 language policy (2026-09-28) | ✅ Done — see "What the adoption session did" above; **pushed; CI passed on the last commit of each push (earlier commits in a push were checked only as part of it)** |
-| 12 | Independent review of the language-policy branch (fresh Opus agent, standing in for Codex) | ✅ Done — see "Independent review" above; its own fixes were reviewed by task 15 |
-| 13 | Codex review of the language-policy branch (or another independent AI system, once Codex has allowance again) | ⏳ Owed — the reviews at tasks 12, 15, 16 and 17 were all fallbacks, not the usual one; see "Review history" above |
-| 14 | Copy-update sweep: re-pin to core `aaaa585` (2026-09-28, later the same day) | ✅ Done — see "Copy-update sweep" above; reviewed by task 15, which found and fixed problems in it |
-| 15 | Second independent review (a second fresh Opus agent, standing in for Codex again) | ✅ Done — see "Second independent review" above; its own fixes were reviewed by task 16, which found and fixed problems in them |
-| 16 | Third independent review (a third fresh Opus agent, standing in for Codex again) | ✅ Done — see "Third independent review" above; its own fixes were reviewed by task 17 |
-| 17 | Fourth independent review (a fresh Opus agent, standing in for Codex, covering MeedyaSubtitler and MeedyaPlayer together) | ✅ Done — see "Review history" above; its own fixes are task 18, below |
-| 18 | Round 4 fixes: replace the scattered review-history narrative with the "Review history" table (this round) | ✅ Done — its own fixes are not yet reviewed |
+| 11 | Adopt MWBM-MEDIA-LANG 1.0.0 language policy (2026-09-28) | ✅ Done — see "The language-policy work" above; pushed |
+| 12 | Stand-in reviews of the language-policy branch, and their fixes (fresh Opus agents standing in for Codex) | See "Review history" — one table for every round |
+| 13 | Codex review of the language-policy branch (or another independent AI system, once Codex has allowance again) | ⏳ Owed — see "Review history" |
+| 14 | Copy-update sweep: re-pin to core `aaaa585` (2026-09-28, later the same day) | ✅ Done — see "Pin history" above |
 
 ## Open questions for the owner
-1. **`alpha` branch:** it doesn't exist yet. Should we create it from `main` so the single PR has something to target? (Suggested: yes, when we are ready to open the PR.) `feature/bcp47-language-policy` is pushed and reviewed, but still has nowhere to open a PR against until this is answered.
+1. **`alpha` branch:** it doesn't exist yet. Should we create it from `main` so the single PR has something to target? (Suggested: yes, when we are ready to open the PR.) `feature/bcp47-language-policy` is pushed (review status: see "Review history"), but still has nowhere to open a PR against until this is answered.
 2. **"00:08 Codex review":** nothing in this repo is waiting on it. Does it relate to MeedyaSubtitler, or to a different project? If it's this repo, review the `claude/keen-pascal-shoj9x` branch.
 3. **Where Codex reviews run:** cloud sessions don't have Codex or dev-team-plugins installed. Should reviews be run on your own machine, or should we try to install them in the cloud environment's setup script?
 
 ## Next steps (in order)
-1. Run the still-owed Codex review (task 13) — or another independent AI system if Codex remains unavailable — over all the fixes made so far (tasks 12, 15, 16 and 17 were all fallbacks — see "Review history" above — and this round's own fixes, task 18, have not been checked by anyone yet), and on `claude/keen-pascal-shoj9x` (task 8). Fix anything found.
-2. Get answers to the open questions.
-3. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two — both branches are already pushed.
-4. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `aaaa585aa145634c057c0bbdd9bd5fc11c3274a0` (moved forward from `f2e106a9d025c95d679eed825ab0f78a6b23ebe7` by the 2026-09-28 copy-update sweep, above) — as of this sweep it still exists only on that core branch, confirmed again by walking core's history (not yet an ancestor of core's `main`). This sweep does **not** settle that: core has not merged yet, so the risk is unchanged — if that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
-5. Start phase 0: issue #5 (project foundation: Swift 6.3/SwiftUI project skeleton) → #14 (handoff with MeedyaConverter). Do deep planning first with sequential Opus agents (R3), then build with Sonnet/Haiku, then run the Codex review loop (R5). Bear in mind the language-policy comments left on #5, #6, #8 and #14 when this work starts.
+1. Run the still-owed Codex review (task 13) — or another independent AI system if Codex remains unavailable — over every commit the language-policy work added (`6a4690e..feature/bcp47-language-policy`, that is `fbae4a1` on); "Review history" shows what each earlier review covered. Also review `claude/keen-pascal-shoj9x` (task 8). Fix anything found.
+2. Correct the [first comment on #6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155) (checked 2026-09-28: none of the later comments does): it says "SDH/commentary must be preserved through every conversion (rule TRACK-040)", but TRACK-040 lists only "SDH, captions, audio description and text descriptions"; keeping a commentary flag rests on COMPAT-030 ("Valid existing language data, flags and titles MUST be preserved when a file or record is touched for another reason"). MeedyaPlayer #3 had the same slip and was corrected in MeedyaPlayer's round 5 fixes.
+3. Get answers to the open questions.
+4. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two — both branches are already pushed.
+5. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`, which (checked 2026-09-28) is still only on that core branch, not an ancestor of core's `main`. If that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
+6. Start phase 0: issue #5 (project foundation: Swift 6.3/SwiftUI project skeleton) → #14 (handoff with MeedyaConverter). Do deep planning first with sequential Opus agents (R3), then build with Sonnet/Haiku, then run the Codex review loop (R5). Bear in mind the language-policy comments left on #5, #6, #8 and #14 when this work starts.

@@ -23,7 +23,7 @@ A native subtitle editor for Apple devices (macOS, iPadOS, iOS, visionOS); Windo
 ## Branches
 - `main`: contains only the first commit (README, .gitignore, LICENSE).
 - `claude/keen-pascal-shoj9x`: the earlier working branch (standing rules, handoff, memory files). Will later go to `alpha` in one PR.
-- `feature/bcp47-language-policy`: cut from the branch above, 2026-09-28. Adopts the shared MWBM-MEDIA-LANG 1.0.0 language policy (see HANDOFF.md). **Pushed; CI passed on the last commit of each push (earlier commits in a push were checked only as part of it)**, and through four rounds of fallback review — see HANDOFF.md, "Review history," for the one table of what each round covered and found — this is the one working branch to use until it merges (contains everything `claude/keen-pascal-shoj9x` has).
+- `feature/bcp47-language-policy`: cut from the branch above, 2026-09-28. Adopts the shared MWBM-MEDIA-LANG 1.0.0 language policy (see HANDOFF.md, "The language-policy work"). **Pushed**; CI and review status are in HANDOFF.md, "Review history". This is the one working branch to use until it merges (it contains everything `claude/keen-pascal-shoj9x` has).
 - `alpha`: **does not exist yet** (see the open question in HANDOFF.md).
 
 ## Shared language policy (MWBM-MEDIA-LANG)
