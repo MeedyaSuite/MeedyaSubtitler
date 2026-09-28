@@ -1,0 +1,44 @@
+# .github/workflows/policy-copies.yml
+#
+# Why this workflow exists: MeedyaSubtitler keeps its own byte-identical
+# copies of the shared MWBM-MEDIA-LANG language policy (see
+# docs/standards/media-language-bcp47-policy.md and, next to it, the
+# MWBM-MEDIA-LANG.lock file that records exactly which commit of
+# MWBMPartners/MeedyaSuite-core those copies came from). Copies only stay
+# trustworthy if something checks them on every change, so this workflow
+# runs scripts/media-lang/check_copies.py -- the same checker script that
+# is itself one of the copied files -- and fails the build if a copy has
+# been hand-edited, a file is missing from the lock, or the lock's pinned
+# commit turns out not to be real MeedyaSuite-core history.
+#
+# This is the FIRST workflow in this repository (there is no application
+# code yet), so it is deliberately small and does only this one job. Once
+# MeedyaSubtitler has a Swift package -- starting with the format layer,
+# issue #6 -- this workflow is the natural place to add the language
+# policy's own Swift conformance tests (see the policy document's section
+# 8.1) alongside this copy check -- both are checking the same policy,
+# just at different levels (are the files right; does the code built from
+# them behave right).
+name: Policy copies
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  check-copies:
+    name: Check MWBM-MEDIA-LANG policy copies
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned to a full commit SHA, not the mutable "v4" tag, so a
+      # compromised tag can never inject different code into this job.
+      # SHA looked up with: gh api repos/actions/checkout/git/ref/tags/v4
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Verify policy copies match the master
+        run: python3 scripts/media-lang/check_copies.py
