@@ -81,14 +81,16 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 4 fixes | `5b09c30` | Put review status into this one table; fixed the wrong statements the fourth review found | Fifth stand-in review, `1263d79..5b09c30` | Not clean — across both repositories, 1 should-fix, 9 minor, 3 nits and 1 follow-up; it confirmed this table's rows; fixed in round 5 |
 | Round 5 fixes | `48de926` | cut the review narrative | sixth stand-in review (`5b09c30..48de926`) | not clean: 0 must, 0 should, 2 minor, 1 nit (across both repositories) |
 | Round 6 fixes | `a2a860b` | completed the wrong-message lists | seventh stand-in review (`48de926..a2a860b`) | not clean: 0 must, 0 should, 2 minor, 3 nits (across both repositories) — wording and table upkeep only |
+| Round 7 fixes | `a7b77c0`, `10b7b8b` | kept this table current; "Last updated" gives the date only | eighth stand-in review (`a2a860b..10b7b8b`) | not clean: 0 must, 1 should, 2 minor (across both repositories) |
+| Round 8 fixes | `e284012` | the CI line states the rule instead of listing runs | ninth stand-in review (`10b7b8b..e284012`) | not clean: 0 must, 0 should, 2 minor (across both repositories) |
 
-Commits after `a2a860b` are not yet reviewed. This table records finished reviews only.
+Commits after `e284012` are not yet reviewed. This table records finished reviews only.
 
 - Every review so far has been a fresh Opus agent standing in for Codex. **None of this work has had a Codex review.**
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
 - Two commit messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
 - Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
-- **CI:** GitHub runs the workflow on the last commit of each push; a commit pushed together with a later one has no run of its own (for example the four folded into the first push, `fbae4a1`, `19aad9d`, `80bbb02` and `6f198b6`). GitHub's Actions page is the record of each run — this file deliberately does not list them, because such a list goes out of date with every push.
+- **CI:** the workflow arrived with `19aad9d`, so commits from before it (such as `fbae4a1`, `6a4690e` and `53bbc0f`) have no check run. From `19aad9d` on, GitHub runs it on the last commit of each push; a commit pushed together with a later one has no run of its own (for example `19aad9d`, `80bbb02` and `6f198b6`, which went up with `58d8f1b` in the first push). GitHub's Actions page is the record of each run — this file deliberately does not list them, because such a list goes out of date with every push.
 
 ## Where we are (state of play)
 - The project is at **planning stage**. There is no app code yet: just README, LICENSE, .gitignore, `docs/` (added by the language-policy work — see above), and the planning issues #1 to #15.
