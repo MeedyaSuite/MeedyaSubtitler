@@ -14,8 +14,9 @@ can be read from a plain checkout with no network and no submodule.
   Per the policy's own section 2, MeedyaSubtitler's profile is
   **canonical** and **text** — it writes subtitle languages, roles (SDH,
   forced, commentary, and so on) and sidecar file names — plus a small
-  **presentation** part for its own language pickers. The full Part B menu
-  ordering and automatic track selection are a player's job; matching
+  **presentation** part for its own language pickers. Automatic track
+  selection (AUTO-010 to AUTO-040) is a player's job (section 8.1); this
+  app's own language pickers still follow Part B's menu rules, and matching
   (MATCH-010 to MATCH-040) is needed by the text profile too (section
   8.1).
 - **`../Tests/Fixtures/`** — byte-identical copies of the policy's
