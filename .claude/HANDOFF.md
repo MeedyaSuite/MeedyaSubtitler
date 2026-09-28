@@ -1,7 +1,7 @@
 # HANDOFF — pick up here
 
-> **Last updated:** 2026-09-28 (by a Claude Code economy-tier builder session, Sonnet, acting on a fresh Opus agent's independent review)
-> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed to `origin/feature/bcp47-language-policy` at `58d8f1b`, CI green; will go to `alpha` in a single PR)
+> **Last updated:** 2026-09-28 (by a Claude Code economy-tier builder session, Sonnet, running a core copy-update sweep)
+> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed to `origin/feature/bcp47-language-policy` at `58d8f1b`, CI green, then reviewed by a fresh Opus agent and pushed again as `fc211a1`; will go to `alpha` in a single PR). Core then shipped more reviewed clarifications, so the copies here were moved to core's new commit `aaaa585` — see "Copy-update sweep" below.
 
 ## Starting a fresh session? Do this
 1. Check out branch `feature/bcp47-language-policy` (or `claude/keen-pascal-shoj9x` if picking up the earlier, still-unmerged bootstrap work instead) and pull the latest.
@@ -106,6 +106,20 @@ What it found and fixed:
   independently reviewed yet, which is what this section now records, not
   something being retroactively added to those commit messages.
 
+## Copy-update sweep, 2026-09-28 (later the same day)
+
+MeedyaSuite-core shipped several more reviewed clarifications on top of the
+commit the copies were pinned to (`f2e106a9d025c95d679eed825ab0f78a6b23ebe7`).
+This session moved the pin forward to core's new commit
+`aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`.
+
+1. Ran `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py --update aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`, then the checker again with no arguments: `MWBM-MEDIA-LANG 1.0.0: 6 copies match the master at MWBMPartners/MeedyaSuite-core@aaaa585aa145.` (exit 0). `.gitattributes` still lists all six copies — the file set didn't change, only their contents. The conformance case file went from 268 cases to 290; nothing in this repository's own prose named the old count, so there was nothing else to update for that.
+2. Read what changed (eight clarified rules, all in the policy's own 1.0.0 changelog, none changing an existing case's answer): a malformed preference or menu value matches nothing, not even an identical malformed value, and a user whose preferences are all malformed counts as having none; "canonical order" in automatic selection means a track's position in full stored order among *every* track of its type; when every audio track is commentary or other, commentary is preferred; a forced-only subtitle search can match a forced track against a private-use or grandfathered audio tag; a sidecar builder reads what it's given with LANG-002's reader before writing the file name; a label lists each role once and leaves out an empty part along with its separator; and a malformed value keeps its text after LANG-001 step 1's trim.
+3. **Checked, nothing to change:** none of `docs/README.md`, `AGENTS.md`, `.claude/CLAUDE.md`, `.claude/CONTEXT.md` or `.OpenAI/CONTEXT.md` describes any of the eight points above in enough detail to have been wrong — they only say, in general terms, that MeedyaSubtitler writes subtitle languages, roles and sidecar names, without describing the sidecar-naming algorithm or the automatic-selection rules (those belong to a player, outside this app's profile — see the clarifications posted on #14 and #8 in the previous round). So nothing here needed enriching or correcting this time.
+4. `python3 scripts/media-lang/check_copies.py` and `actionlint` both still pass (checked again after this update).
+5. **Not settled by this update:** the pin still points at a commit that exists only on core's `feature/bcp47-language-policy` branch, not on core's `main` (confirmed again — see the Next steps item below, which now names the new commit rather than the one this replaces).
+6. Opened [#16 — Language policy (MWBM-MEDIA-LANG) adoption and conformance tracking](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/16) as the umbrella issue this and future re-pins are recorded against (none existed before this sweep). Commits from this point on `Refs #16`.
+
 ## Where we are (state of play)
 - The project is at **planning stage**. There is no app code yet: just README, LICENSE, .gitignore, `docs/` (new this session — see above), and the planning issues #1 to #15.
 - **No pull requests** exist. **No `alpha` branch** exists yet.
@@ -134,6 +148,7 @@ What it found and fixed:
 | 11 | Adopt MWBM-MEDIA-LANG 1.0.0 language policy (2026-09-28) | ✅ Done — see "What the adoption session did" above; **pushed** (`58d8f1b`, CI green) |
 | 12 | Independent review of the language-policy branch (fresh Opus agent, standing in for Codex) | ✅ Done — see "Independent review" above; its own fixes are not yet reviewed |
 | 13 | Codex review of the language-policy branch (or another independent AI system, once Codex has allowance again) | ⏳ Owed — the review at task 12 was a fallback, not the usual one |
+| 14 | Copy-update sweep: re-pin to core `aaaa585` (2026-09-28, later the same day) | ✅ Done — see "Copy-update sweep" above; also not yet reviewed |
 
 ## Open questions for the owner
 1. **`alpha` branch:** it doesn't exist yet. Should we create it from `main` so the single PR has something to target? (Suggested: yes, when we are ready to open the PR.) `feature/bcp47-language-policy` is pushed and reviewed, but still has nowhere to open a PR against until this is answered.
@@ -144,5 +159,5 @@ What it found and fixed:
 1. Run the still-owed Codex review (task 13) — or another independent AI system if Codex remains unavailable — over the fixes made in the "Independent review" section above (task 12 was itself a fallback and has not been checked by anyone else yet), and on `claude/keen-pascal-shoj9x` (task 8). Fix anything found.
 2. Get answers to the open questions.
 3. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two — both branches are already pushed.
-4. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `f2e106a9d025c95d679eed825ab0f78a6b23ebe7`, which today exists only on that core branch (confirmed by walking core's history — it is not yet an ancestor of core's `main`). If that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
+4. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `aaaa585aa145634c057c0bbdd9bd5fc11c3274a0` (moved forward from `f2e106a9d025c95d679eed825ab0f78a6b23ebe7` by the 2026-09-28 copy-update sweep, above) — as of this sweep it still exists only on that core branch, confirmed again by walking core's history (not yet an ancestor of core's `main`). This sweep does **not** settle that: core has not merged yet, so the risk is unchanged — if that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
 5. Start phase 0: issue #5 (project foundation: Swift 6.3/SwiftUI project skeleton) → #14 (handoff with MeedyaConverter). Do deep planning first with sequential Opus agents (R3), then build with Sonnet/Haiku, then run the Codex review loop (R5). Bear in mind the language-policy comments left on #5, #6, #8 and #14 when this work starts.
