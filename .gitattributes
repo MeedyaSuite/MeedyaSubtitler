@@ -1,0 +1,15 @@
+# .gitattributes
+#
+# MWBM-MEDIA-LANG policy copies must stay byte-for-byte identical to the
+# master files in MWBMPartners/MeedyaSuite-core (see
+# docs/standards/media-language-bcp47-policy.md, section 8.3). If git ever
+# converted their line endings on checkout, the copy checker
+# (scripts/media-lang/check_copies.py) would report every one of them as
+# "changed" even though nobody edited a single character. Marking them
+# "-text" tells git never to touch their line endings, on any platform.
+docs/standards/media-language-bcp47-policy.md -text
+Tests/Fixtures/bcp47-language-policy-v1.json -text
+Tests/Fixtures/bcp47-language-policy-v1.schema.json -text
+docs/standards/data/bcp47-language-data-v1.json -text
+docs/standards/data/bcp47-language-data-v1.schema.json -text
+scripts/media-lang/check_copies.py -text
