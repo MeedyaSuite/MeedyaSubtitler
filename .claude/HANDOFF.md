@@ -55,7 +55,7 @@ rule that builders refuse a sidecar number above nine digits. The adoption
 session moved it once, to `f2e106a`; its note that no rule ID changed and
 the move was only wording and a test-harness clarification was essentially
 accurate (the policy text gained one sentence on how a test harness treats
-refusal cases, and the case file gained six refusal cases, 262 → 268). The
+refusal cases, the case schema gained an `error` field for them, and the case file gained six refusal cases, 262 → 268). The
 copy-update sweep then moved it to `aaaa585` (268 → 290 cases; among other
 changes it settled eight points the text had left open, listed in the
 policy's own 1.0.0 changelog). No rule ID changed at any step.
@@ -83,7 +83,7 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 
 - Every review so far has been a fresh Opus agent standing in for Codex. **None of this work has had a Codex review.**
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
-- Two commit messages carry a claim later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has "CI green on every commit" (see the CI line below).
+- Two commit messages carry a claim later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
 - Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
 - **CI:** of the commits this work has pushed (from `fbae4a1` on), only the last commit of each push has its own check run — `58d8f1b`, `fc211a1`, `bf48908`, `970f8f4`, `1263d79` and `5b09c30`, all passed. The four commits folded into the first push (`fbae4a1`, `19aad9d`, `80bbb02`, `6f198b6`) were checked only as part of it.
 
