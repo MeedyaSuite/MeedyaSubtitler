@@ -7,3 +7,17 @@ Before doing anything in a new session, read these in order:
 3. @.claude/CONTEXT.md — project background and memory
 
 Keep `.claude/HANDOFF.md` updated **as you go** (rule R2). Explain everything in plain English (rule R1).
+
+## Languages, tracks, subtitles and lyrics — mandatory
+
+Any work touching BCP 47 language tags, languages, translations, audio or
+subtitle tracks, lyrics, track order or naming, language preferences, or
+accessibility roles (SDH, audio description, forced, commentary) MUST read
+and follow `docs/standards/media-language-bcp47-policy.md` (policy
+`MWBM-MEDIA-LANG`). It is normative and is not repeated here. Its
+conformance cases (`Tests/Fixtures/bcp47-language-policy-v1.json`) must
+pass once code exists; the Swift implementation to reuse is in
+MeedyaConverter until a shared package exists. The copies are checked
+against the master in MWBMPartners/MeedyaSuite-core by
+`scripts/media-lang/check_copies.py`; never edit the copies — change the
+master.

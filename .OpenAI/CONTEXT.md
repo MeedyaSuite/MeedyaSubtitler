@@ -6,6 +6,20 @@ This folder is the Codex (and any non-Claude AI) copy of the project's memory. T
 - `.claude/HANDOFF.md`: where we are and what to do next. Read it first, and keep it updated as you go.
 - `.claude/CONTEXT.md`: project background, phases and branches.
 
+## Languages, tracks, subtitles and lyrics — mandatory
+
+Any work touching BCP 47 language tags, languages, translations, audio or
+subtitle tracks, lyrics, track order or naming, language preferences, or
+accessibility roles (SDH, audio description, forced, commentary) MUST read
+and follow [`docs/standards/media-language-bcp47-policy.md`](../docs/standards/media-language-bcp47-policy.md)
+(policy `MWBM-MEDIA-LANG`). It is normative and is not repeated here. Its
+conformance cases (`Tests/Fixtures/bcp47-language-policy-v1.json`) must
+pass once code exists; the Swift implementation to reuse is in
+MeedyaConverter until a shared package exists. The copies are checked
+against the master in MWBMPartners/MeedyaSuite-core by
+`scripts/media-lang/check_copies.py`; never edit the copies — change the
+master.
+
 ## Summary
 - MeedyaSubtitler: a native Apple subtitle editor (Swift/SwiftUI), a companion to MeedyaConverter. Currently at the planning stage (issues #1 to #15, phases 0 to 6). No code yet.
 - Working branch: `claude/keen-pascal-shoj9x`. One PR into `alpha` later; never open extra PRs.
