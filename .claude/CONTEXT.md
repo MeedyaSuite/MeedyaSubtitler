@@ -22,8 +22,23 @@ A native subtitle editor for Apple devices (macOS, iPadOS, iOS, visionOS); Windo
 
 ## Branches
 - `main`: contains only the first commit (README, .gitignore, LICENSE).
-- `claude/keen-pascal-shoj9x`: the **working branch**. All work goes here and will later go to `alpha` in one PR.
+- `claude/keen-pascal-shoj9x`: the earlier working branch (standing rules, handoff, memory files). Will later go to `alpha` in one PR.
+- `feature/bcp47-language-policy`: cut from the branch above, 2026-09-28. Adopts the shared MWBM-MEDIA-LANG 1.0.0 language policy (see HANDOFF.md). Not pushed.
 - `alpha`: **does not exist yet** (see the open question in HANDOFF.md).
+
+## Shared language policy (MWBM-MEDIA-LANG)
+
+Adopted 2026-09-28. `docs/standards/media-language-bcp47-policy.md` is a
+byte-identical copy of the master document in
+`MWBMPartners/MeedyaSuite-core`, checked against it by
+`scripts/media-lang/check_copies.py` (run in CI via
+`.github/workflows/policy-copies.yml`). **Never edit the copy** — change
+the master and run `--update`. MeedyaSubtitler's profile under this policy
+is "canonical and text" (it writes subtitle languages, roles and sidecar
+names) plus a small presentation part (its language pickers) — see the
+policy document's section 2 for what that means precisely. Any work
+touching languages, tracks, subtitles, lyrics or accessibility roles must
+read and follow it; see `AGENTS.md` / `.claude/CLAUDE.md` for the pointer.
 
 ## Things to remember
 - Owner preferences: plain English; cost-aware choice of AI models; reviews done by a different AI; one PR only; keep the handoff always up to date.
