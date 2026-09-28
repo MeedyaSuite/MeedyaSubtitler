@@ -2,7 +2,7 @@
 
 ## Log
 - 2026-09-23: Project memory set up (standing rules, handoff, context). No code yet. A Codex review of these documentation files is owed.
-- 2026-09-28: New branch `feature/bcp47-language-policy` adopted the shared MWBM-MEDIA-LANG 1.0.0 language policy (copies under `docs/standards/`, checker + first CI workflow, agent pointers in AGENTS.md/.claude/CLAUDE.md/.OpenAI/CONTEXT.md, comments on issues #5/#6/#8/#14). Committed, not pushed. **A Codex review of this branch is owed** — see `.claude/HANDOFF.md`.
+- 2026-09-28: New branch `feature/bcp47-language-policy` adopted the shared MWBM-MEDIA-LANG 1.0.0 language policy (copies under `docs/standards/`, checker + first CI workflow, agent pointers in AGENTS.md/.claude/CLAUDE.md/.OpenAI/CONTEXT.md, comments on issues #5/#6/#8/#14). Committed and **pushed** (`58d8f1b`, CI green). A fresh Opus agent then reviewed it in Codex's place (Codex was out of allowance) and found several inaccuracies — see `.claude/HANDOFF.md`, "Independent review". **Those fixes are themselves not yet reviewed** — that review is still owed.
 
 ## Device-wide rule (copy into `~/.codex/AGENTS.md` and `~/.claude/CLAUDE.md` on each machine)
 

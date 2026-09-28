@@ -10,10 +10,17 @@ can be read from a plain checkout with no network and no submodule.
   policy (version 1.0.0), whose master copy is
   [`MWBMPartners/MeedyaSuite-core`](https://github.com/MWBMPartners/MeedyaSuite-core),
   `docs/standards/media-language-bcp47-policy.md`. It says how every Meedya
-  app identifies, stores, orders, names, matches and selects languages —
-  and MeedyaSubtitler needs almost all of it, since it's the app that
-  writes subtitle languages, roles (SDH, forced, commentary, and so on) and
-  sidecar file names.
+  app identifies, stores, orders, names, matches and selects languages.
+  Per the policy's own section 2, MeedyaSubtitler's profile is
+  **canonical** and **text** — it writes subtitle languages, roles (SDH,
+  forced, commentary, and so on) and sidecar file names — plus a small
+  **presentation** part for its own language pickers. That's not "almost
+  all of it": the policy is explicit that a project builds only the parts
+  marked for it and SHOULD NOT build the rest (the full Part B menu,
+  matching and automatic-selection logic belongs to a player, not an
+  editor).
+- **`../Tests/Fixtures/`** — byte-identical copies of the policy's
+  conformance test cases and their schema (same lock as the files above).
 
 ## Why these are copies, not a link
 

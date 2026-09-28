@@ -14,14 +14,15 @@ accessibility roles (SDH, audio description, forced, commentary) MUST read
 and follow [`docs/standards/media-language-bcp47-policy.md`](../docs/standards/media-language-bcp47-policy.md)
 (policy `MWBM-MEDIA-LANG`). It is normative and is not repeated here. Its
 conformance cases (`Tests/Fixtures/bcp47-language-policy-v1.json`) must
-pass once code exists; the Swift implementation to reuse is in
-MeedyaConverter until a shared package exists. The copies are checked
-against the master in MWBMPartners/MeedyaSuite-core by
-`scripts/media-lang/check_copies.py`; never edit the copies — change the
-master.
+pass once code exists; the Swift implementation is in MeedyaConverter for
+now (on a work-in-progress branch there, not yet on its `alpha`) and moves
+to a shared package once MeedyaPlayer or MeedyaSubtitler has code (policy
+section 9). The copies are checked against the master in
+MWBMPartners/MeedyaSuite-core by `scripts/media-lang/check_copies.py`;
+never edit the copies — change the master.
 
 ## Summary
 - MeedyaSubtitler: a native Apple subtitle editor (Swift/SwiftUI), a companion to MeedyaConverter. Currently at the planning stage (issues #1 to #15, phases 0 to 6). No code yet.
-- Working branch: `claude/keen-pascal-shoj9x`. One PR into `alpha` later; never open extra PRs.
+- Working branch: `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed, `58d8f1b`, CI green, independently reviewed 2026-09-28 — see `.claude/HANDOFF.md`). One PR into `alpha` later; never open extra PRs.
 - Your usual role here: **reviewer** of work built by Claude Code. Review, fix what you find, and re-review until clean (rule R5). If Claude is unavailable, you may take over building (rule R7). Update `.claude/HANDOFF.md` as you go so Claude can switch back in.
 - Explain everything in plain English (rule R1).

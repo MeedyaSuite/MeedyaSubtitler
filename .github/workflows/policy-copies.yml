@@ -21,6 +21,12 @@
 # them behave right).
 name: Policy copies
 
+# Read-only by default: this job only checks out the repository and reads
+# files (locally and from GitHub's API for the upstream master files). It
+# never needs to write anything, so the token it's handed is read-only too.
+permissions:
+  contents: read
+
 on:
   pull_request:
   push:
@@ -32,13 +38,21 @@ jobs:
     name: Check MWBM-MEDIA-LANG policy copies
     runs-on: ubuntu-latest
     steps:
-      # Pinned to a full commit SHA, not the mutable "v4" tag, so a
+      # Pinned to a full commit SHA, not the mutable "v6.1.0" tag, so a
       # compromised tag can never inject different code into this job.
-      # SHA looked up with: gh api repos/actions/checkout/git/ref/tags/v4
+      # SHA looked up with: gh api repos/actions/checkout/git/ref/tags/v6.1.0
       - name: Check out repository
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
 
       - name: Verify policy copies match the master
+        # Without a token, the checker's lookups against the GitHub API
+        # (confirming the pinned commit is real MeedyaSuite-core history,
+        # and fetching the master files to compare checksums) hit GitHub's
+        # unauthenticated rate limit — reproduced locally as an HTTP 403.
+        # The default job token is read-only and expires with the job, so
+        # handing it to the checker costs nothing beyond that.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/media-lang/check_copies.py

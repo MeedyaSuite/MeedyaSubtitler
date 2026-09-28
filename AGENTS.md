@@ -13,8 +13,9 @@ accessibility roles (SDH, audio description, forced, commentary) MUST read
 and follow `docs/standards/media-language-bcp47-policy.md` (policy
 `MWBM-MEDIA-LANG`). It is normative and is not repeated here. Its
 conformance cases (`Tests/Fixtures/bcp47-language-policy-v1.json`) must
-pass once code exists; the Swift implementation to reuse is in
-MeedyaConverter until a shared package exists. The copies are checked
-against the master in MWBMPartners/MeedyaSuite-core by
-`scripts/media-lang/check_copies.py`; never edit the copies — change the
-master.
+pass once code exists; the Swift implementation is in MeedyaConverter for
+now (on a work-in-progress branch there, not yet on its `alpha`) and moves
+to a shared package once MeedyaPlayer or MeedyaSubtitler has code (policy
+section 9). The copies are checked against the master in
+MWBMPartners/MeedyaSuite-core by `scripts/media-lang/check_copies.py`;
+never edit the copies — change the master.

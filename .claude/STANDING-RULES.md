@@ -28,7 +28,7 @@ Update `.claude/HANDOFF.md` **during** the work, not just at the end, so we can 
 All code goes through a **Codex review**. Any issues found are fixed automatically, then reviewed again by Codex — **repeat until the review finds no issues**.
 
 ### R6. No PR stacking
-Do **not** create multiple pull requests (PRs). All work is committed to the **one working branch** (currently `claude/keen-pascal-shoj9x`), which will later be merged into `alpha` through a **single PR created later**. This avoids PRs clashing with each other when merged.
+Do **not** create multiple pull requests (PRs). All work is committed to the **one working branch** — currently `feature/bcp47-language-policy`, which contains every commit `claude/keen-pascal-shoj9x` has and is the one to keep using until it is merged (see `.claude/HANDOFF.md`) — which will later be merged into `alpha` through a **single PR created later**. This avoids PRs clashing with each other when merged.
 
 ### R7. AI fallback (also applies device-wide)
 If an AI service (e.g. Claude Code, Codex — or any other) or its agents become unavailable or run out of tokens/credits, **hand the work to another suitable AI tool**, as long as that can be done without losing context or progress. Then:
