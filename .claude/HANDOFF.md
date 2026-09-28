@@ -1,6 +1,6 @@
 # HANDOFF — pick up here
 
-> **Last updated:** 2026-09-28 (by a Claude Code builder session, Opus)
+> **Last updated:** 2026-09-28
 > **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
 
 ## Starting a fresh session? Do this
