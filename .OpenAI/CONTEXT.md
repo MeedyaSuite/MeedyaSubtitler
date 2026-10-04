@@ -23,6 +23,6 @@ never edit the copies — change the master.
 
 ## Summary
 - MeedyaSubtitler: a native Apple subtitle editor (Swift/SwiftUI), a companion to MeedyaConverter. Currently at the planning stage (issues #1 to #15, phases 0 to 6). No code yet.
-- Working branch: `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; CI and review status are in `.claude/HANDOFF.md`, "Review history"). One PR into `alpha` later; never open extra PRs.
+- Working branch: `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; CI and review status are in `.claude/HANDOFF.md`, "Review history"). One PR into `alpha` later; never open extra PRs.
 - Your usual role here: **reviewer** of work built by Claude Code. Review, fix what you find, and re-review until clean (rule R5). If Claude is unavailable, you may take over building (rule R7). Update `.claude/HANDOFF.md` as you go so Claude can switch back in.
 - Explain everything in plain English (rule R1).

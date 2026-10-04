@@ -13,14 +13,21 @@
 #   -filter                 never run a filter on this file
 #   -working-tree-encoding  never convert its text encoding
 #   -ident                  never expand an "$Id$" marker in it
-# These lines can be overridden, and git lets the last word go to whichever
-# source is more specific or later. Three things win over them: a broader
-# line LATER in this same .gitattributes (the last matching line wins), a
-# .gitattributes file in a sub-folder, and a person's own
-# ".git/info/attributes" file. If one of those changes how a copy is written
-# out, the copy checker still catches it, because it compares the actual
-# bytes and reports any changed copy; the fix is to remove the overriding
-# line, not to change the copy.
+# These lines can be overridden. Three things win over them:
+#   - any later line in this same .gitattributes that also matches the copy
+#     (git uses the last matching line for each setting, so that line need
+#     not be broader);
+#   - a .gitattributes file closer to the copy: one in the copy's own folder,
+#     or in a folder between the copy and the top folder of the repository
+#     (a deeper file wins over a shallower one; a .gitattributes in some
+#     other folder that does not contain the copy has no effect on it);
+#   - a person's own ".git/info/attributes" file, because git always gives
+#     that file the highest priority.
+# The global and system attributes files have the lowest priority, so they do
+# not override these lines. If something that does override them changes how
+# a copy is written out, the copy checker still catches it, because it
+# compares the actual bytes and reports any changed copy; the fix is to
+# remove the overriding setting, not to change the copy.
 docs/standards/media-language-bcp47-policy.md -text -filter -working-tree-encoding -ident
 Tests/Fixtures/bcp47-language-policy-v1.json -text -filter -working-tree-encoding -ident
 Tests/Fixtures/bcp47-language-policy-v1.schema.json -text -filter -working-tree-encoding -ident

@@ -1,10 +1,10 @@
 # HANDOFF — pick up here
 
-> **Last updated:** 2026-09-28
+> **Last updated:** 2026-10-04
 > **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
 
 ## Starting a fresh session? Do this
-1. Check out branch `feature/bcp47-language-policy` (or `claude/keen-pascal-shoj9x` if picking up the earlier, still-unmerged bootstrap work instead) and pull the latest.
+1. Check out branch `feature/bcp47-language-policy` (it already contains everything that is on `claude/keen-pascal-shoj9x`, so there is no separate branch to pick up) and pull the latest.
 2. Read `.claude/STANDING-RULES.md` (the rules always apply), then this file, then `.claude/CONTEXT.md`.
 3. Deal with the **open questions** below (ask the owner if they are still unanswered).
 4. Continue with the **next steps** queue.
@@ -20,9 +20,9 @@ documents and one check:
   its schema, and the checker script, under `docs/standards/`,
   `Tests/Fixtures/` and `scripts/media-lang/`.
   `docs/standards/MWBM-MEDIA-LANG.lock` records which core commit they came
-  from, and `.gitattributes` stops line-ending conversion, filters, encoding conversion and `$Id$` expansion. Never
-  edit a copy — change the master in core, then run the checker's
-  `--update` here.
+  from, and `.gitattributes` stops line-ending conversion, filters,
+  encoding conversion and `$Id$` expansion. Never edit a copy — change the
+  master in core, then run the checker's `--update` here.
 - `.github/workflows/policy-copies.yml`, the repo's first CI workflow. It
   runs the checker on every pull request and push, with read-only
   permissions, the job's own token handed to the checker, and
@@ -70,7 +70,7 @@ deleted):
 
 ## Review history
 
-The one place review status is kept. Round N's fixes act on review N's findings. The third, fourth and fifth reviews each gave one count for MeedyaSubtitler and MeedyaPlayer together.
+The one place review status is kept. Round N's fixes act on review N's findings. The third to ninth reviews, and the twelfth, each gave one count for MeedyaSubtitler and MeedyaPlayer together (their rows say so).
 
 | Round | Commits | What the round did | Covered by which review (range) | Result |
 | --- | --- | --- | --- | --- |
@@ -84,14 +84,17 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 7 fixes | `a7b77c0`, `10b7b8b` | kept this table current; "Last updated" gives the date only | eighth stand-in review (`a2a860b..10b7b8b`) | not clean: 0 must, 1 should, 2 minor (across both repositories) |
 | Round 8 fixes | `e284012` | the CI line states the rule instead of listing runs | ninth stand-in review (`10b7b8b..e284012`) | not clean: 0 must, 0 should, 2 minor (across both repositories) |
 | Round 9 fixes | `44cf095` | recorded the eighth and ninth reviews in the table; said when CI began | Codex catch-up review, `53bbc0f..44cf095` (the first review of it) | covered by the next row |
-| Codex catch-up | up to `44cf095` | The first review by the actual, usual reviewer (Codex) — every review before this one was a fresh Opus agent standing in for it. It covered the whole branch as one piece rather than just the diff since the last review, so it also reached the commit before the adoption work (`6a4690e`) | Codex catch-up review, `53bbc0f..44cf095` | not clean — one finding, the `.gitattributes` protection gap (shared with MeedyaPlayer, which also had 7 findings of its own); acted on by the commit after `44cf095` (`415aa4c`, round 10 fixes), not yet reviewed |
+| Codex catch-up | up to `44cf095` | The first review by the actual, usual reviewer (Codex) — every review before this one was a fresh Opus agent standing in for it. It covered the whole branch as one piece rather than just the diff since the last review, so it also reached the commit before the adoption work (`6a4690e`) | Codex catch-up review, `53bbc0f..44cf095` | not clean — one finding, the `.gitattributes` protection gap (shared with MeedyaPlayer, which also had 7 findings of its own); acted on by `415aa4c` (round 10 fixes) |
+| Round 10 fixes | `415aa4c` | Acted on the Codex catch-up review's finding | Eleventh review, a fresh Opus agent standing in for Codex, `44cf095..415aa4c` | not clean — 3 serious, 4 medium, 2 minor; acted on by `8dfa024` (round 11 fixes) |
+| Round 11 fixes | `8dfa024`, `46c7501` | Acted on the eleventh review's findings; `46c7501` removed a trailing space | Twelfth review, a fresh Opus agent standing in for Codex, `415aa4c..46c7501` | not clean — 1 high, 2 medium, 5 low, 7 nits (across both repositories); acted on by the round 12 fixes (the commit after `46c7501`), not yet reviewed |
 
-Commits after `44cf095` are not yet reviewed. This table records finished reviews only.
+Commits after `46c7501` are not yet reviewed. This table records finished reviews only.
 
-- Every review up to and including the ninth stand-in review was a fresh Opus agent standing in for Codex. The Codex catch-up review is the first review by the actual, usual reviewer; commits after `44cf095` still await one.
+- Every review except the Codex catch-up review (up to and including the ninth, then the eleventh and twelfth) was a fresh Opus agent standing in for Codex. The Codex catch-up review is the only review by the actual, usual reviewer; commits after `46c7501` still await a review.
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
 - Two commit messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
-- Neither the attribution nor these two messages is corrected in the commits themselves: pushed commits are not rewritten.
+- `46c7501`'s message says only "Not yet reviewed"; it does not say which review it acts on (it follows `8dfa024`, which acts on the eleventh review, and fixes a trailing space that commit left).
+- Neither the attribution nor these messages (`bf48908`, `970f8f4`, `46c7501`) is corrected in the commits themselves: pushed commits are not rewritten.
 - **CI:** the workflow arrived with `19aad9d`, so commits from before it (such as `fbae4a1`, `6a4690e` and `53bbc0f`) have no check run. From `19aad9d` on, GitHub runs it on the last commit of each push; a commit pushed together with a later one has no run of its own (for example `19aad9d`, `80bbb02` and `6f198b6`, which went up with `58d8f1b` in the first push). GitHub's Actions page is the record of each run — this file deliberately does not list them, because such a list goes out of date with every push.
 
 ## Where we are (state of play)
@@ -115,7 +118,7 @@ Commits after `44cf095` are not yet reviewed. This table records finished review
 | 4 | Create and update the handoff | ✅ Done |
 | 5 | Claude and Codex memory/context files | ✅ Done |
 | 6 | Thorough documentation update | ✅ Done (nothing else applies yet: no code, API or web part) |
-| 7 | Commit and push to the working branch | ✅ Done |
+| 7 | Commit to the working branch | ✅ Done |
 | 8 | Codex review of this session's changes | ✅ Covered by the Codex catch-up review (`53bbc0f..44cf095`, which includes `6a4690e`); see "Review history" |
 | 9 | The Codex review the owner mentioned for **00:08** | ❓ Not visible from this repo (see open question 2) |
 | 10 | Start phase 0 work (#5 foundation, then #14) | ⏸ Waiting for the owner's go-ahead |
@@ -130,9 +133,9 @@ Commits after `44cf095` are not yet reviewed. This table records finished review
 3. **Where Codex reviews run:** cloud sessions don't have Codex or dev-team-plugins installed. Should reviews be run on your own machine, or should we try to install them in the cloud environment's setup script?
 
 ## Next steps (in order)
-1. Review only the commits after `44cf095` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s one commit, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
+1. Review only the commits after `46c7501` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s one commit, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
 2. Correct the [first comment on #6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155) (checked 2026-09-28: none of the later comments does): it says "SDH/commentary must be preserved through every conversion (rule TRACK-040)", but TRACK-040 lists only "SDH, captions, audio description and text descriptions"; keeping a commentary flag rests on COMPAT-030 ("Valid existing language data, flags and titles MUST be preserved when a file or record is touched for another reason"). MeedyaPlayer #3 had the same slip and was corrected in MeedyaPlayer's round 5 fixes.
 3. Get answers to the open questions.
-4. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two.
+4. Once question 1 is answered and the branch is clean, open **one** PR from `feature/bcp47-language-policy` (no PR stacking). `claude/keen-pascal-shoj9x` has nothing the feature branch lacks — its only commit, `6a4690e`, is already on it — so there is nothing separate to combine.
 5. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`, which (checked 2026-09-28) is still only on that core branch, not an ancestor of core's `main`. If that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
 6. Start phase 0: issue #5 (project foundation: Swift 6.3/SwiftUI project skeleton) → #14 (handoff with MeedyaConverter). Do deep planning first with sequential Opus agents (R3), then build with Sonnet/Haiku, then run the Codex review loop (R5). Bear in mind the language-policy comments left on #5, #6, #8 and #14 when this work starts.
