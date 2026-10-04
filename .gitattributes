@@ -13,11 +13,14 @@
 #   -filter                 never run a filter on this file
 #   -working-tree-encoding  never convert its text encoding
 #   -ident                  never expand an "$Id$" marker in it
-# This only controls what happens inside this repository. A higher-priority
-# setting on someone's own machine (for example their own
-# ".git/info/attributes" file) can still override it — if that happens, the
-# copy checker would correctly report the copy as changed, and the fix is to
-# remove that person's local override, not to change this file.
+# These lines can be overridden, and git lets the last word go to whichever
+# source is more specific or later. Three things win over them: a broader
+# line LATER in this same .gitattributes (the last matching line wins), a
+# .gitattributes file in a sub-folder, and a person's own
+# ".git/info/attributes" file. If one of those changes how a copy is written
+# out, the copy checker still catches it, because it compares the actual
+# bytes and reports any changed copy; the fix is to remove the overriding
+# line, not to change the copy.
 docs/standards/media-language-bcp47-policy.md -text -filter -working-tree-encoding -ident
 Tests/Fixtures/bcp47-language-policy-v1.json -text -filter -working-tree-encoding -ident
 Tests/Fixtures/bcp47-language-policy-v1.schema.json -text -filter -working-tree-encoding -ident

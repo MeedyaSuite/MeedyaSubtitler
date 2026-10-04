@@ -1,7 +1,7 @@
 # HANDOFF — pick up here
 
 > **Last updated:** 2026-09-28
-> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; pushed; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
+> **Working branch:** `feature/bcp47-language-policy` (cut from, and containing every commit of, `claude/keen-pascal-shoj9x`; will go to `alpha` in a single PR). It adopts the shared language policy — see "The language-policy work". CI and review status are in "Review history". The round 5 fixes removed the sections that told the story of each review round; the commit messages keep that record.
 
 ## Starting a fresh session? Do this
 1. Check out branch `feature/bcp47-language-policy` (or `claude/keen-pascal-shoj9x` if picking up the earlier, still-unmerged bootstrap work instead) and pull the latest.
@@ -20,7 +20,7 @@ documents and one check:
   its schema, and the checker script, under `docs/standards/`,
   `Tests/Fixtures/` and `scripts/media-lang/`.
   `docs/standards/MWBM-MEDIA-LANG.lock` records which core commit they came
-  from, and `.gitattributes` stops git changing their line endings. Never
+  from, and `.gitattributes` stops line-ending conversion, filters, encoding conversion and `$Id$` expansion. Never
   edit a copy — change the master in core, then run the checker's
   `--update` here.
 - `.github/workflows/policy-copies.yml`, the repo's first CI workflow. It
@@ -83,7 +83,8 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 6 fixes | `a2a860b` | completed the wrong-message lists | seventh stand-in review (`48de926..a2a860b`) | not clean: 0 must, 0 should, 2 minor, 3 nits (across both repositories) — wording and table upkeep only |
 | Round 7 fixes | `a7b77c0`, `10b7b8b` | kept this table current; "Last updated" gives the date only | eighth stand-in review (`a2a860b..10b7b8b`) | not clean: 0 must, 1 should, 2 minor (across both repositories) |
 | Round 8 fixes | `e284012` | the CI line states the rule instead of listing runs | ninth stand-in review (`10b7b8b..e284012`) | not clean: 0 must, 0 should, 2 minor (across both repositories) |
-| Codex catch-up | — (review only; produced no commits) | The first review by the actual, usual reviewer (Codex) — every review before this one was a fresh Opus agent standing in for it. It covered the whole branch as one piece rather than just the diff since the last review | Codex catch-up review, `53bbc0f..44cf095` | not clean — one finding, the `.gitattributes` protection gap (shared with MeedyaPlayer, which also had 7 findings of its own); fixed in this round |
+| Round 9 fixes | `44cf095` | recorded the eighth and ninth reviews in the table; said when CI began | Codex catch-up review, `53bbc0f..44cf095` (the first review of it) | covered by the next row |
+| Codex catch-up | up to `44cf095` | The first review by the actual, usual reviewer (Codex) — every review before this one was a fresh Opus agent standing in for it. It covered the whole branch as one piece rather than just the diff since the last review, so it also reached the commit before the adoption work (`6a4690e`) | Codex catch-up review, `53bbc0f..44cf095` | not clean — one finding, the `.gitattributes` protection gap (shared with MeedyaPlayer, which also had 7 findings of its own); acted on by the commit after `44cf095` (`415aa4c`, round 10 fixes), not yet reviewed |
 
 Commits after `44cf095` are not yet reviewed. This table records finished reviews only.
 
@@ -103,7 +104,7 @@ Commits after `44cf095` are not yet reviewed. This table records finished review
   - `.OpenAI/CONTEXT.md` and `.OpenAI/MEMORY.md`, plus a root `AGENTS.md`: the same information for Codex and other AI tools
 - The AI fallback rule (R7) was also written to the **device-wide** files (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`). ⚠️ In a cloud session those files are **wiped when the session ends**, so the lasting copy lives in this repo. The owner should copy the rule onto their own machine(s) (text is in `.OpenAI/MEMORY.md`, section "Device-wide rule").
 - Documentation pass (T2): the README is accurate for the planning stage. There is **no API** (so no Swagger), **no web part** (so no Swagger UI) and **no app** (so no in-app help) yet. Nothing more to do until code exists.
-- Codex review (R5): the 2026-09-23 session only changed documentation, and the Codex CLI isn't installed in the cloud session. **A Codex review of these files is still owed.** Run it from a machine that has Codex (see the next steps).
+- Codex review (R5): the 2026-09-23 session only changed documentation, and the Codex CLI wasn't installed in the cloud session. Its files (commit `6a4690e`) were covered later by the Codex catch-up review, `53bbc0f..44cf095` — see "Review history".
 
 ## Task queue
 | # | Task | Status |
@@ -115,23 +116,23 @@ Commits after `44cf095` are not yet reviewed. This table records finished review
 | 5 | Claude and Codex memory/context files | ✅ Done |
 | 6 | Thorough documentation update | ✅ Done (nothing else applies yet: no code, API or web part) |
 | 7 | Commit and push to the working branch | ✅ Done |
-| 8 | Codex review of this session's changes | ⏳ Owed: Codex isn't available in the cloud session |
+| 8 | Codex review of this session's changes | ✅ Covered by the Codex catch-up review (`53bbc0f..44cf095`, which includes `6a4690e`); see "Review history" |
 | 9 | The Codex review the owner mentioned for **00:08** | ❓ Not visible from this repo (see open question 2) |
 | 10 | Start phase 0 work (#5 foundation, then #14) | ⏸ Waiting for the owner's go-ahead |
-| 11 | Adopt MWBM-MEDIA-LANG 1.0.0 language policy (2026-09-28) | ✅ Done — see "The language-policy work" above; pushed |
+| 11 | Adopt MWBM-MEDIA-LANG 1.0.0 language policy (2026-09-28) | ✅ Done — see "The language-policy work" above |
 | 12 | Stand-in reviews of the language-policy branch, and their fixes (fresh Opus agents standing in for Codex) | See "Review history" — one table for every round |
-| 13 | Codex review of the language-policy branch (or another independent AI system, once Codex has allowance again) | ⏳ Owed — see "Review history" |
+| 13 | Codex review of the language-policy branch | ✅ Done for `53bbc0f..44cf095` (the Codex catch-up review); the commits after `44cf095` still await one — see "Review history" |
 | 14 | Copy-update sweep: re-pin to core `aaaa585` (2026-09-28, later the same day) | ✅ Done — see "Pin history" above |
 
 ## Open questions for the owner
-1. **`alpha` branch:** it doesn't exist yet. Should we create it from `main` so the single PR has something to target? (Suggested: yes, when we are ready to open the PR.) `feature/bcp47-language-policy` is pushed (review status: see "Review history"), but still has nowhere to open a PR against until this is answered.
-2. **"00:08 Codex review":** nothing in this repo is waiting on it. Does it relate to MeedyaSubtitler, or to a different project? If it's this repo, review the `claude/keen-pascal-shoj9x` branch.
+1. **`alpha` branch:** it doesn't exist yet. Should we create it from `main` so the single PR has something to target? (Suggested: yes, when we are ready to open the PR.) `feature/bcp47-language-policy` (review status: see "Review history") still has nowhere to open a PR against until this is answered.
+2. **"00:08 Codex review":** nothing in this repo is waiting on it. Does it relate to MeedyaSubtitler, or to a different project? 
 3. **Where Codex reviews run:** cloud sessions don't have Codex or dev-team-plugins installed. Should reviews be run on your own machine, or should we try to install them in the cloud environment's setup script?
 
 ## Next steps (in order)
-1. Run the still-owed Codex review (task 13) — or another independent AI system if Codex remains unavailable — over every commit the language-policy work added (`6a4690e..feature/bcp47-language-policy`, that is `fbae4a1` on); "Review history" shows what each earlier review covered. Also review `claude/keen-pascal-shoj9x` (task 8). Fix anything found.
+1. Review only the commits after `44cf095` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s one commit, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
 2. Correct the [first comment on #6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155) (checked 2026-09-28: none of the later comments does): it says "SDH/commentary must be preserved through every conversion (rule TRACK-040)", but TRACK-040 lists only "SDH, captions, audio description and text descriptions"; keeping a commentary flag rests on COMPAT-030 ("Valid existing language data, flags and titles MUST be preserved when a file or record is touched for another reason"). MeedyaPlayer #3 had the same slip and was corrected in MeedyaPlayer's round 5 fixes.
 3. Get answers to the open questions.
-4. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two — both branches are already pushed.
+4. Once question 1 is answered and both branches are clean, combine into **one** PR (no PR stacking) rather than opening two.
 5. **After MeedyaSuite-core's `feature/bcp47-language-policy` branch merges to its `main`:** the lock here pins core commit `aaaa585aa145634c057c0bbdd9bd5fc11c3274a0`, which (checked 2026-09-28) is still only on that core branch, not an ancestor of core's `main`. If that branch is squash-merged and then deleted, the pinned commit can stop being reachable from GitHub's API, and the copy checker would start failing with nothing in this repo having changed. Once core merges, run `GITHUB_TOKEN=$(gh auth token) python3 scripts/media-lang/check_copies.py --update <the commit on core's main>` here to re-pin against a commit that will stay reachable.
 6. Start phase 0: issue #5 (project foundation: Swift 6.3/SwiftUI project skeleton) → #14 (handoff with MeedyaConverter). Do deep planning first with sequential Opus agents (R3), then build with Sonnet/Haiku, then run the Codex review loop (R5). Bear in mind the language-policy comments left on #5, #6, #8 and #14 when this work starts.
