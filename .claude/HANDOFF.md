@@ -99,6 +99,12 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 
 Commits after `222842e` are not yet reviewed. This table records finished reviews only.
 
+**Handed over to this repository's own sessions (2026-10-05).** This work was run from a coordinating session in the MeedyaDL repository. On 5 October 2026 the owner handed it back here: nothing more is run from there, and this file is the record.
+
+- **Finished under the owner's new stop rule** (5 October 2026). A review loop stops when a review finds no high or medium problems. Low findings, wording points, and older faults a reviewer finds become issues, not new rounds. The twentieth review (a stand-in) was clean.
+- **Owed: a Codex review of everything after `44cf095`** (rounds 10 to 19, and the record commit after `222842e`). That is the last range Codex itself reviewed; every review since was a stand-in. It covers MeedyaPlayer (after `bc901ad`) too, as the earlier reviews did. Fix any high or medium finding; file everything else as an issue.
+- **Still waiting on the owner:** the decisions listed further down in this file.
+
 - Every review except the Codex catch-up review (up to and including the ninth, then the eleventh to twentieth) was a fresh Opus agent standing in for Codex. The Codex catch-up review is the only review by the actual, usual reviewer; commits after `222842e` still await a review.
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
 - `bf48908`'s and `970f8f4`'s messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
@@ -145,7 +151,7 @@ Commits after `222842e` are not yet reviewed. This table records finished review
 3. **Where Codex reviews run:** cloud sessions don't have Codex or dev-team-plugins installed. Should reviews be run on your own machine, or should we try to install them in the cloud environment's setup script?
 
 ## Next steps (in order)
-1. Review only the commits after `222842e` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s only commit beyond `main`, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
+1. A Codex review of everything after `44cf095`, the last range Codex itself reviewed (see "Handed over" under "Review history"). If Codex cannot run, a fresh independent agent can stand in; say which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s only commit beyond `main`, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
 2. Correct the [first comment on #6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155) (checked 2026-09-28: none of the later comments does): it says "SDH/commentary must be preserved through every conversion (rule TRACK-040)", but TRACK-040 lists only "SDH, captions, audio description and text descriptions"; keeping a commentary flag rests on COMPAT-030 ("Valid existing language data, flags and titles MUST be preserved when a file or record is touched for another reason"). MeedyaPlayer #3 had the same slip and was corrected in MeedyaPlayer's round 5 fixes.
 3. Get answers to the open questions.
 4. Once question 1 is answered and the branch is clean, open **one** PR from `feature/bcp47-language-policy` (no PR stacking). `claude/keen-pascal-shoj9x` has nothing the feature branch lacks — its only commit beyond `main`, `6a4690e`, is already on it — so there is nothing separate to combine.
