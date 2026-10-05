@@ -71,7 +71,7 @@ deleted):
 
 ## Review history
 
-The one place review status is kept. Round N's fixes act on review N's findings. The third to ninth, and eleventh to nineteenth, reviews each gave one count for MeedyaSubtitler and MeedyaPlayer together (their rows say so).
+The one place review status is kept. Round N's fixes act on review N's findings. The third to ninth, and eleventh to twentieth, reviews each gave one count for MeedyaSubtitler and MeedyaPlayer together (their rows say so).
 
 | Round | Commits | What the round did | Covered by which review (range) | Result |
 | --- | --- | --- | --- | --- |
@@ -94,11 +94,12 @@ The one place review status is kept. Round N's fixes act on review N's findings.
 | Round 15 fixes | `29e1ce5` | Acted on the fifteenth review's findings | Sixteenth review, a fresh Opus agent standing in for Codex, `c2e4ef9..29e1ce5` | not clean — 0 high, 0 medium, 3 low, 5 nits (across both repositories); acted on by `0fc0a5b` (round 16 fixes) |
 | Round 16 fixes | `0fc0a5b` | Acted on the sixteenth review's findings | Seventeenth review, a fresh Opus agent standing in for Codex, `29e1ce5..0fc0a5b` | not clean — 0 high, 0 medium, 4 low, 3 nits (across both repositories); acted on by `4c382aa` (round 17 fixes) |
 | Round 17 fixes | `4c382aa` | Acted on the seventeenth review's findings | Eighteenth review, a fresh Opus agent standing in for Codex, `0fc0a5b..4c382aa` | not clean — 0 high, 0 medium, 3 low, 2 nits (across both repositories); acted on by `48b3287` (round 18 fixes) |
-| Round 18 fixes | `48b3287` | Acted on the eighteenth review's findings | Nineteenth review, a fresh Opus agent standing in for Codex, `4c382aa..48b3287` | not clean — 0 high, 0 medium, 2 low, 2 nits (across both repositories); acted on by the round 19 fixes, not yet reviewed |
+| Round 18 fixes | `48b3287` | Acted on the eighteenth review's findings | Nineteenth review, a fresh Opus agent standing in for Codex, `4c382aa..48b3287` | not clean — 0 high, 0 medium, 2 low, 2 nits (across both repositories); acted on by `222842e` (round 19 fixes) |
+| Round 19 fixes | `222842e` | Acted on the nineteenth review's findings | Twentieth review, a fresh Opus agent standing in for Codex, `48b3287..222842e` | clean — 0 high, 0 medium, 0 low, 1 nit (across both repositories; the nit was in MeedyaPlayer) |
 
-Commits after `48b3287` are not yet reviewed. This table records finished reviews only.
+Commits after `222842e` are not yet reviewed. This table records finished reviews only.
 
-- Every review except the Codex catch-up review (up to and including the ninth, then the eleventh to nineteenth) was a fresh Opus agent standing in for Codex. The Codex catch-up review is the only review by the actual, usual reviewer; commits after `48b3287` still await a review.
+- Every review except the Codex catch-up review (up to and including the ninth, then the eleventh to twentieth) was a fresh Opus agent standing in for Codex. The Codex catch-up review is the only review by the actual, usual reviewer; commits after `222842e` still await a review.
 - `fc211a1` (round 1 fixes) and `bf48908` (copy-update sweep) say `Co-Authored-By: Claude Opus 5.5`, though a Sonnet builder made them. The other commits this work added before round 5 name Sonnet, which built them; round 5 was built by Opus and says so.
 - `bf48908`'s and `970f8f4`'s messages carry claims later found wrong: `bf48908` says sidecar naming is a player's job, outside this app's profile (it is this app's job, TEXT-030; only automatic selection is a player's), and `970f8f4` says the branch has 'CI green on every commit' (see the CI line below) and that 'the full Part B menu and automatic selection are a player's job' (only automatic selection is; this app's own language pickers follow Part B's menu rules).
 - `8dfa024` (`61985e1` in MeedyaPlayer) says it acts on "the stand-in review of round 11"; in this table that review is the eleventh (of the round 10 fixes).
@@ -144,7 +145,7 @@ Commits after `48b3287` are not yet reviewed. This table records finished review
 3. **Where Codex reviews run:** cloud sessions don't have Codex or dev-team-plugins installed. Should reviews be run on your own machine, or should we try to install them in the cloud environment's setup script?
 
 ## Next steps (in order)
-1. Review only the commits after `48b3287` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s only commit beyond `main`, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
+1. Review only the commits after `222842e` — Codex if it has allowance, otherwise a fresh independent agent, saying which one was used. "Review history" shows what each earlier review covered (`claude/keen-pascal-shoj9x`'s only commit beyond `main`, `6a4690e`, is already inside the Codex catch-up range). Fix anything found.
 2. Correct the [first comment on #6](https://github.com/MeedyaSuite/MeedyaSubtitler/issues/6#issuecomment-5862052155) (checked 2026-09-28: none of the later comments does): it says "SDH/commentary must be preserved through every conversion (rule TRACK-040)", but TRACK-040 lists only "SDH, captions, audio description and text descriptions"; keeping a commentary flag rests on COMPAT-030 ("Valid existing language data, flags and titles MUST be preserved when a file or record is touched for another reason"). MeedyaPlayer #3 had the same slip and was corrected in MeedyaPlayer's round 5 fixes.
 3. Get answers to the open questions.
 4. Once question 1 is answered and the branch is clean, open **one** PR from `feature/bcp47-language-policy` (no PR stacking). `claude/keen-pascal-shoj9x` has nothing the feature branch lacks — its only commit beyond `main`, `6a4690e`, is already on it — so there is nothing separate to combine.
