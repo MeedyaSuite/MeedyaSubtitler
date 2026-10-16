@@ -45,3 +45,6 @@ All built on [MeedyaSuite-core](https://github.com/MWBMPartners/MeedyaSuite-core
 ## License
 
 All rights reserved by MWBM Partners Ltd, 2026. Licensing terms TBD as the project matures.
+## Media preservation planning
+
+See [the application media preservation requirements](docs/media-preservation-subtitles.md) for proposed responsibilities, native caption protection, timelines, metadata, track relationships and verification. These are development requirements, not claims of implemented support.
